@@ -3,19 +3,18 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package game03_flappybird;
+package world;
+
+import java.awt.image.BufferedImage;
 
 /**
  *
  * @author samuel
  */
-public class Game03_FlappyBird {
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-        // TODO code application logic here
+public class WallTile extends Tile {
+    
+    public WallTile(int x, int y, BufferedImage sprite) {
+        super(x, y, sprite);
     }
     
 }
