@@ -5,12 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8d27f57e-64b6-48b2-9e91-cae5c8be5f86" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/entities/Tubo.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/Game03_FlappyBird.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/world/TuboGenerator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Game03_FlappyBird.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Game04/out/production/Game04/Inimigo.class" beforeDir="false" afterPath="$PROJECT_DIR$/../Game04/out/production/Game04/Inimigo.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
