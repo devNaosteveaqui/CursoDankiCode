@@ -32,7 +32,7 @@ public class GameEngine extends Canvas implements Runnable, KeyListener, MouseLi
     //TESTE
     public static int pc = 0;
     public static int pcmax = 100000;
-
+    public static GameObject root_game;
     public static Random rand;
     GameEngine() {
         rand = new Random();
