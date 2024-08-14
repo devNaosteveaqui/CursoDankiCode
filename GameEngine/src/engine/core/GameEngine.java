@@ -1,14 +1,18 @@
 package engine.core;
 
+import engine.graphics.Vector2D;
+import engine.utilities.GameObject;
+import game.MyGame;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Random;
+import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -19,28 +23,32 @@ public class GameEngine extends Canvas implements Runnable, KeyListener, MouseLi
     private BufferedImage image;
 
     //Propriedades basicas do jogo
-    public static final int WIDTH = 240;
-    public static final int HEIGHT = 160;
-    public static final int SCALE = 3;
+    public static Vector2D WindowSize;
+    public static Vector2D WindowScale;
     //Sistema de LoopGame
     private Thread thread;
     private boolean isRunning;
     private final double amountOfTicks = 60.0;
     private final double ns = 1000000000/amountOfTicks;
     //ELEMENTOS DO GAME ENGINE
-    public static List<GameObjectReferenceCaller> gorc = new ArrayList<GameObjectReferenceCaller>();
+    public static List<GameObjectReferenceCaller> gorc;
     //TESTE
     public static int pc = 0;
     public static int pcmax = 100000;
     public static GameObject root_game;
     public static Random rand;
     GameEngine() {
+        WindowSize = new Vector2D(160,160);
+        WindowScale = new Vector2D(3,3);
         rand = new Random();
         addKeyListener(this);
         addMouseListener(this);
-        setPreferredSize(new Dimension((int) (WIDTH*SCALE), (int) (HEIGHT*SCALE)));
+        setPreferredSize(new Dimension((int) (WindowSize.x*WindowScale.x), (int) (WindowSize.x*WindowScale.x)));
         initFrame();
-        image = new BufferedImage(WIDTH,HEIGHT,BufferedImage.TYPE_INT_RGB);
+        image = new BufferedImage((int) WindowSize.x, (int) WindowSize.y,BufferedImage.TYPE_INT_RGB);
+        gorc = new ArrayList<GameObjectReferenceCaller>();
+
+        addGameObject(new MyGame(),0);
     }
     private void initFrame() {
         frame = new JFrame(game_name);
@@ -77,15 +85,15 @@ public class GameEngine extends Canvas implements Runnable, KeyListener, MouseLi
         }
         Graphics g = image.getGraphics();
         //Limpa a Tela
-        g.setColor(new Color(0,0,0));
-        g.fillRect(0, 0, WIDTH, HEIGHT);
+        g.setColor(new Color(80,80,80));
+        g.fillRect(0, 0, (int) WindowSize.x, (int) WindowSize.y);
 
         for (GameObjectReferenceCaller n : gorc) n.render_process(g);
 
         //Renderiza tudo em um frame
         g.dispose();
         g = bs.getDrawGraphics();
-        g.drawImage((Image) image, 0, 0, (int) (WIDTH*SCALE), (int) (HEIGHT*SCALE), null);
+        g.drawImage((Image) image, 0, 0, (int) (WindowSize.x*WindowScale.x), (int) (WindowSize.x*WindowScale.x), null);
 
         bs.show();
     }
@@ -122,7 +130,7 @@ public class GameEngine extends Canvas implements Runnable, KeyListener, MouseLi
 
     @Override
     public void mouseReleased(MouseEvent mouseEvent) {
-
+        for (GameObjectReferenceCaller n : gorc) n.tick_process();
     }
 
     @Override
@@ -164,7 +172,7 @@ public class GameEngine extends Canvas implements Runnable, KeyListener, MouseLi
                 delta--;
             }
             if(System.currentTimeMillis() - timer >= 1000) {
-                System.out.println("FPS: " + frames);
+                //System.out.println("FPS: " + frames);
                 frames = 0;
                 timer += 1000;
             }
@@ -172,4 +180,12 @@ public class GameEngine extends Canvas implements Runnable, KeyListener, MouseLi
 
         stop();
     }
+    public static void addGameObject(GameObject obj,int layer) {
+        GameObjectReferenceCaller objRC = new GameObjectReferenceCaller(obj);
+        GameEngine.gorc.add(objRC);
+    }
+    public static void removeGameObject(GameObject obj, int layer) {
+        GameEngine.gorc.remove(obj.reference);
+    }
+
 }
